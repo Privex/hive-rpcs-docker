@@ -1,46 +1,40 @@
 version: '2'
 
 services:
-    nginx-core:
-        container_name: nginx-core
+    caddy-core:
+        container_name: caddy-core
         restart: always
-        build: ./nginx-core
+        build: ./caddy-core
         ports:
-            - "127.0.0.1:8877:80"
-            - "80"
+            - "127.0.0.1:6890:80"
+        volumes:
+            - ./caddy-core/:/etc/caddy/
 
-    nginx-acchist:
-        container_name: nginx-acchist
+    caddy-hivemind:
+        container_name: caddy-hivemind
         restart: always
-        build: ./nginx-acchist
+        build: ./caddy-hivemind
         ports:
-            - "127.0.0.1:8878:80"
-            - "80"
+            - "127.0.0.1:6880:80"
+        volumes:
+            - ./caddy-hivemind/:/etc/caddy/
 
     rpc-core:
-        image: hive-fullmem-mira 
+        image: hive
+        restart: "no"
         container_name: rpc-core
-        command: steemd --data-dir=/steem/witness_node_data_dir
+        command: hived --data-dir=/steem/witness_node_data_dir
         volumes:
             - /hive/rpc1:/steem
             - /shmhive/rpc1:/shm
         ports:
             - "8090"
             - "8091"
-
-    rpc-acchist:
-        image: hive-lowmem-nomira
-        container_name: rpc-acchist
-        command: steemd --data-dir=/steem/witness_node_data_dir
-        volumes:
-            - /hive/rpc2:/steem
-            - /shmhive/rpc2:/shm
-        ports:
-            - "8090"
-            - "8091"
+            - "0.0.0.0:8090:8090"
+            - "0.0.0.0:8091:8091"
 
     jussi:
-        restart: "no"
+        restart: "always"
         image: "steemit/jussi:latest"
         ports:
         - "127.0.0.1:8080:8080"
@@ -54,11 +48,11 @@ services:
         - ./jussi/DEV_config.json:/app/DEV_config.json
 
     redis1:
-        restart: "no"
+        restart: "always"
         image: "redis:3.2"
 
     redis2:
-        restart: "no"
+        restart: "always"
         image: "redis:3.2"
         ports:
         - "6379"
@@ -73,3 +67,6 @@ services:
 networks:
     default:
         driver: 'bridge'
+        #external:
+        #    name: hivenet
+

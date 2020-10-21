@@ -1,0 +1,12 @@
+:80
+
+reverse_proxy {
+    to http://rpc-core:8091
+    header_down X-Upstream {http.reverse_proxy.upstream.hostport}
+    transport http {
+        read_buffer 4096
+        keepalive 5m
+        keepalive_idle_conns 5
+    }
+}
+

@@ -1,64 +1,139 @@
 {
-	"limits": {
-		"blacklist_accounts":["non-steemit"]
-	},
-	"upstreams":[
-		{
-			"name":"steemd",
-			"translate_to_appbase":true,
-			"urls":[
-				["steemd","http://nginx-core"],
-				["steemd.account_history_api", "http://nginx-acchist"]
-			],
-			"ttls":[
-				["steemd",3],
-				["steemd.login_api",-1],
-				["steemd.network_broadcast_api",-1],
-				["steemd.follow_api",10],
-				["steemd.market_history_api",1],
-				["steemd.database_api",3],
-				["steemd.database_api.get_block",-2],
-				["steemd.database_api.get_block_header",-2],
-				["steemd.database_api.get_content",1],
-				["steemd.database_api.get_state",1],
-				["steemd.database_api.get_state.params=['/trending']",30],
-				["steemd.database_api.get_state.params=['trending']",30],
-				["steemd.database_api.get_state.params=['/hot']",30],
-				["steemd.database_api.get_state.params=['/welcome']",30],
-				["steemd.database_api.get_state.params=['/promoted']",30],
-				["steemd.database_api.get_state.params=['/created']",10],
-				["steemd.database_api.get_dynamic_global_properties",1]
-			],
-			"timeouts":[
-				["steemd",5],
-				["steemd.network_broadcast_api",0]
-			]
-		},
-		{
-			"name":"appbase",
-			"urls":[
-				["appbase","http://nginx-core"],
-				["appbase.condenser_api.get_account_history", "http://nginx-acchist"],
-				["condenser_api.get_account_history", "http://nginx-acchist"],
-				["condenser_api.get_transaction", "http://nginx-acchist"],
-				["appbase.condenser_api.get_transaction", "http://nginx-acchist"],
-				["appbase.account_history_api", "http://nginx-acchist"]
-			],
-			"ttls":[
-				["appbase",-2],
-				["appbase.block_api",-2],
-				["appbase.database_api",1]
-			],
-			"timeouts":[
-				["appbase",3],
-				["appbase.chain_api.push_block",0],
-				["appbase.chain_api.push_transaction",0],
-				["appbase.network_broadcast_api",0],
-				["appbase.condenser_api.broadcast_block",0],
-				["appbase.condenser_api.broadcast_transaction",0],
-				["appbase.condenser_api.broadcast_transaction_synchronous",0],
-				["appbase.condenser_api.get_ops_in_block.params=[2889020,false]",20]
-			]
-		}
-	]
+    "limits": {
+        "blacklist_accounts":["non-steemit"]
+    },
+    "upstreams":[
+        {
+            "name":"steemd",
+            "translate_to_appbase":true,
+            "urls":[
+                ["steemd","http://caddy-core"]
+            ],
+            "ttls":[
+                ["steemd",3],
+                ["steemd.login_api",-1],
+                ["steemd.network_broadcast_api",-1],
+                ["steemd.follow_api",10],
+                ["steemd.market_history_api",1],
+                ["steemd.database_api",3],
+                ["steemd.database_api.get_block",-2],
+                ["steemd.database_api.get_block_header",-2],
+                ["steemd.database_api.get_content",1],
+                ["steemd.database_api.get_state",1],
+                ["steemd.database_api.get_state.params=['/trending']",30],
+                ["steemd.database_api.get_state.params=['trending']",30],
+                ["steemd.database_api.get_state.params=['/hot']",30],
+                ["steemd.database_api.get_state.params=['/welcome']",30],
+                ["steemd.database_api.get_state.params=['/promoted']",30],
+                ["steemd.database_api.get_state.params=['/created']",10],
+                ["steemd.database_api.get_dynamic_global_properties",1]
+            ],
+            "timeouts":[
+                ["steemd",5],
+                ["steemd.network_broadcast_api",0]
+            ]
+        },
+        {
+            "name":"appbase",
+            "urls":[
+                ["appbase","http://caddy-core"],
+
+
+                ["appbase.condenser_api.get_account_votes", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_followers", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_following", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_follow_count", "http://caddy-hivemind"],
+                
+                ["appbase.condenser_api.get_blog", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_blog_entries", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_content", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_content_replies", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_discussions_by_trending", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_hot", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_promoted", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_created", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_blog", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_feed", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_comments", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_discussions_by_author_before_date", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_state", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_trending_tags", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_post_discussions_by_payout", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_comment_discussions_by_payout", "http://caddy-hivemind"],
+
+                ["appbase.condenser_api.get_replies_by_last_update", "http://caddy-hivemind"],
+                ["appbase.condenser_api.get_reblogged_by", "http://caddy-hivemind"],
+
+
+                ["appbase.follow_api", "http://caddy-hivemind"],
+                ["appbase.tags_api", "http://caddy-hivemind"]
+ 
+            ],
+            "ttls":[
+                ["appbase", 3],
+                ["appbase.login_api",-1],
+                ["appbase.network_broadcast_api", -1],
+                ["appbase.follow_api", 10],
+                ["appbase.market_history_api", 1],
+                ["appbase.condenser_api", 3],
+                ["appbase.condenser_api.get_block", -2],
+                ["appbase.condenser_api.get_block_header", -2],
+                ["appbase.condenser_api.get_content", 1],
+                ["appbase.condenser_api.get_state", 1],
+                ["appbase.condenser_api.get_state.params=['/trending']", 30],
+                ["appbase.condenser_api.get_state.params=['trending']", 30],
+                ["appbase.condenser_api.get_state.params=['/hot']", 30],
+                ["appbase.condenser_api.get_state.params=['/welcome']", 30],
+                ["appbase.condenser_api.get_state.params=['/promoted']", 30],
+                ["appbase.condenser_api.get_state.params=['/created']", 10],
+                ["appbase.condenser_api.get_dynamic_global_properties", 3]
+            ],
+            "timeouts":[
+                ["appbase", 3],
+                ["appbase.network_broadcast_api",0],
+                ["appbase.chain_api.push_block", 0],
+                ["appbase.chain_api.push_transaction", 0],
+                ["appbase.condenser_api.broadcast_block", 0],
+                ["appbase.condenser_api.broadcast_transaction", 0],
+                ["appbase.condenser_api.broadcast_transaction_synchronous", 0],
+                ["appbase.condenser_api.get_account_history", 20],
+                ["appbase.condenser_api.get_account_votes", 20],
+                ["appbase.condenser_api.get_ops_in_block.params=[2889020,false]", 20],
+                ["appbase.account_history_api.get_ops_in_block.params={\"block_num\":2889020,\"only_virtual\":false}", 20]
+            ]
+        },
+        {
+            "name": "hive",
+            "urls": [
+                ["hive", "http://caddy-hivemind"]
+            ],
+            "ttls": [
+                ["hive", -1]
+            ],
+            "timeouts": [
+                ["hive", 30]
+            ]
+        },
+        {
+            "name": "bridge",
+            "translate_to_appbase": false,
+            "urls": [
+                ["bridge","http://caddy-hivemind"]
+            ],
+            "ttls": [
+                ["bridge",-1],
+                ["bridge.get_account_posts", 6],
+                ["bridge.get_ranked_posts", 12]
+            ],
+            "timeouts": [
+                ["bridge",30]
+            ]
+        }
+    ]
 }

@@ -1,0 +1,16 @@
+:80
+
+reverse_proxy {
+    to http://hivemind:8080
+    # to https://api.openhive.network https://api.hive.blog
+    # to http://hivemind:8080 http://hived.hive-engine.com http://direct.hived.privex.io http://api.hivekings.com
+    # to https://hived.hive-engine.com https://direct.hived.privex.io https://api.hivekings.com
+    header_up Host {http.reverse_proxy.upstream.hostport}
+    header_down X-Upstream {http.reverse_proxy.upstream.hostport}
+    transport http {
+        read_buffer 4096
+        keepalive 5m
+        keepalive_idle_conns 5
+    }
+}
+
